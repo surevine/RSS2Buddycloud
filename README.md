@@ -65,6 +65,8 @@ The minimum configuration required is _feedUrl_ provided that all of the _buddyc
 
     bbcnews.buddycloud.channel=someotherchannel@topics.example.com
 
+**Configuration changes require a restart of rss2buddycloud**
+
 Building
 --------
 
@@ -91,4 +93,7 @@ Notes
 -----
 
 * This is a very basic but functional piece of code. Please feel free to fork, use, and make pull requests for new features and/or bug fixes.
-* I'd later like to add the ability to supply templates via configuration using any of the properties from the RSS feed so you can build custom posts per incoming feed
+* I'd later like to add the ability to supply templates via configuration using any of the properties from the RSS feed so you can build custom posts per incoming feed.
+* HORRORss really needs an update to include additional item properties, if we could include GUID then I could remove the awful hashing code that is used.
+* Authenticated (Basic, Digest) need to be supported (see http://www.java-forums.org/java-net/7242-reading-urls-protected-http-authentication.html) - seems easy enough but will require modifying HORRORss and RSS2Buddycloud
+* What to do with HTML in RSS posts?
