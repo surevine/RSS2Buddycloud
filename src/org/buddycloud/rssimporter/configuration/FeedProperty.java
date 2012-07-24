@@ -3,7 +3,7 @@ package org.buddycloud.rssimporter.configuration;
 public class FeedProperty
 {
     private String  feedUrl;
-    private Integer interval;
+    private int     interval;
     private String  host;
     private String  username;
     private String  password;
@@ -21,7 +21,7 @@ public class FeedProperty
 		this.name = name;
 	}
 
-	public void setInterval(Integer interval)
+	public void setInterval(int interval)
     {
         this.interval = interval;
     }
@@ -36,7 +36,7 @@ public class FeedProperty
         this.feedUrl = feedUrl;
     }
 
-    public Integer getInterval()
+    public int getInterval()
     {
     	return interval;
     }

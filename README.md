@@ -97,3 +97,5 @@ Notes
 * HORRORss really needs an update to include additional item properties, if we could include GUID then I could remove the awful hashing code that is used.
 * Authenticated (Basic, Digest) need to be supported (see http://www.java-forums.org/java-net/7242-reading-urls-protected-http-authentication.html) - seems easy enough but will require modifying HORRORss and RSS2Buddycloud
 * What to do with HTML in RSS posts?
+* Redo scheduling of runs using http://quartz-scheduler.org/
+* Add a logger (e.g. log4j) rather than writing to console

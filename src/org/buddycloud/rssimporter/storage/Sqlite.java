@@ -26,69 +26,85 @@ public class Sqlite implements StorageInterface
         setupDatabase();
 	}
 
-	public Boolean filterItem(String itemId, FeedProperty feed) throws SQLException
+	public boolean filterItem(String itemId, FeedProperty feed) throws StorageException
 	{
-		PreparedStatement alreadyPosted = this.connection.prepareStatement(
-		    "SELECT COUNT(*) FROM processed WHERE item = ? AND feed = ?"
-		);
-		alreadyPosted.setString(1, itemId);
-		alreadyPosted.setString(2, feed.toString());
-		ResultSet items = alreadyPosted.executeQuery();
-		Integer results = items.getInt(1);
-		if (results > 0) {
-			return true;
+		try {
+			PreparedStatement alreadyPosted = this.connection.prepareStatement(
+			    "SELECT COUNT(*) FROM processed WHERE item = ? AND feed = ?"
+			);
+			alreadyPosted.setString(1, itemId);
+			alreadyPosted.setString(2, feed.toString());
+			ResultSet items = alreadyPosted.executeQuery();
+			int results = items.getInt(1);
+			if (results > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			throw new StorageException(e.getMessage());
+
 		}
 		return false;
 	}
 
-	public void markItemPosted(String itemId, String feedId) throws SQLException
+	public void markItemPosted(String itemId, String feedId) throws StorageException
 	{
-		PreparedStatement itemPosted = this.connection.prepareStatement(
-		    "INSERT INTO processed VALUES(?, ?);"
-	    );
-		itemPosted.setString(1, feedId);
-		itemPosted.setString(2, itemId);
-		itemPosted.execute();
+		try {
+			PreparedStatement itemPosted = this.connection.prepareStatement(
+			    "INSERT INTO processed VALUES(?, ?);"
+		    );
+			itemPosted.setString(1, feedId);
+			itemPosted.setString(2, itemId);
+			itemPosted.execute();
+		} catch (SQLException e) {
+			throw new StorageException(e.getMessage());
+		}
 	}
 
-	public Integer timeToNextFeedParse(String feedId) throws SQLException
+	public int timeToNextFeedParse(String feedId) throws StorageException
 	{
-		PreparedStatement nextCheck = this.connection.prepareStatement(
-		    "SELECT (next_check - strftime('%s', 'now')) AS howLong FROM next_check WHERE feed = ?;"
-		);
-		nextCheck.setString(1, feedId);
 		try {
+			PreparedStatement nextCheck = this.connection.prepareStatement(
+			    "SELECT (next_check - strftime('%s', 'now')) AS howLong FROM next_check WHERE feed = ?;"
+			);
+			nextCheck.setString(1, feedId);
 			ResultSet items = nextCheck.executeQuery();
-			Integer time = items.getInt(1);
+			int time = items.getInt(1);
 			return time;
 		} catch (SQLException e) {
 			if (e.getMessage() == "ResultSet closed") {
 				return -1;
 			}
-			throw e;
+			throw new StorageException(e.getMessage());
 		}
 	}
 
-    private void setupDatabase() throws SQLException 
+    private void setupDatabase() throws StorageException 
     {
-    	Statement tableCheck = this.connection.createStatement();
-    	ResultSet tableCount = tableCheck.executeQuery("SELECT * FROM sqlite_master WHERE type='table';");
-    	Integer rows = 0;
-    	if (tableCount.next()) { rows = rows + 1; }
-    	if (0 == rows) {
-    		Statement createTables = this.connection.createStatement();
-    		createTables.execute("CREATE TABLE next_check(feed TEXT PRIMARY KEY, next_check TEXT);");
-    		createTables.execute("CREATE TABLE processed(feed TEXT, item TEXT);");
-    	}
+    	try {
+	    	Statement tableCheck = this.connection.createStatement();
+	    	ResultSet tableCount = tableCheck.executeQuery("SELECT * FROM sqlite_master WHERE type='table';");
+
+	    	if (tableCount.next()) { return; }
+
+	    	Statement createTables = this.connection.createStatement();
+	        createTables.execute("CREATE TABLE next_check(feed TEXT PRIMARY KEY, next_check TEXT);");
+	    	createTables.execute("CREATE TABLE processed(feed TEXT, item TEXT);");
+		} catch (SQLException e) {
+			throw new StorageException(e.getMessage());
+		}
     }
     
-    public void setNextCheck(Long nextCheck, String feedId) throws SQLException
+    public void setNextCheck(Long nextCheck, String feedId) throws StorageException
     {
-		PreparedStatement itemPosted = this.connection.prepareStatement(
-			"INSERT OR REPLACE INTO next_check VALUES(?, ?);"
-	    );
-		itemPosted.setString(1, feedId);
-		itemPosted.setLong(2, nextCheck);
-		itemPosted.execute();
+    	try {
+			PreparedStatement itemPosted = this.connection.prepareStatement(
+				"INSERT OR REPLACE INTO next_check VALUES(?, ?);"
+		    );
+			itemPosted.setString(1, feedId);
+			itemPosted.setLong(2, nextCheck);
+			itemPosted.execute();
+		} catch (SQLException e) {
+			throw new StorageException(e.getMessage());
+		}
     }
 }

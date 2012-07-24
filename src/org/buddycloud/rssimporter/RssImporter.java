@@ -18,8 +18,8 @@ import org.horrabin.horrorss.RssParser;
 
 public class RssImporter
 {
-    private ArrayList<FeedProperty> feedCollection = new ArrayList<FeedProperty>();
-    private ArrayList<BuddycloudClient> connections = new ArrayList<BuddycloudClient>();
+    private List<FeedProperty> feedCollection = new ArrayList<FeedProperty>();
+    private List<BuddycloudClient> connections = new ArrayList<BuddycloudClient>();
     private StorageInterface storage;
     private ConfigurationParser configurationParser;
     private MessageDigest hasher;
@@ -57,7 +57,7 @@ public class RssImporter
     	this.setupConnections();
     }
 
-    private void pauseParsingOfFeeds(Integer time)
+    private void pauseParsingOfFeeds(int time)
     {
         try {
         	Thread.sleep(time * 1000);
@@ -68,8 +68,7 @@ public class RssImporter
 
 	private void setupConnections() throws MalformedURLException
     {
-    	for (Object j : feedCollection) {
-    		FeedProperty feed = (FeedProperty) j;
+    	for (FeedProperty feed : feedCollection) {
     	    this.connections.add(
     	        new BuddycloudClient(feed.getHost(), feed.getUsername(), feed.getPassword())
     	    );
@@ -78,11 +77,10 @@ public class RssImporter
 
 	private void processFeeds()
 	{
-		Integer i                     = 0;
-    	Integer nextParse             = 864000;
-    	Integer minimumWaitUntilParse = 864000;
-    	for (Object j : feedCollection) {
-    		FeedProperty feed = (FeedProperty) j;
+		int i                     = 0;
+    	int nextParse             = 864000;
+    	int minimumWaitUntilParse = 864000;
+    	for (FeedProperty feed : feedCollection) {
     		try {
     			nextParse = this.storage.timeToNextFeedParse(feed.getName());
     			if (nextParse < minimumWaitUntilParse) {
@@ -90,14 +88,14 @@ public class RssImporter
     			}
     			if (nextParse <= 0) {
         			this.processItems(feed, i);
-        			Long nextCheck = System.currentTimeMillis()/1000 + feed.getInterval();
+        			long nextCheck = System.currentTimeMillis()/1000 + feed.getInterval();
         			this.storage.setNextCheck(nextCheck, feed.getName());
     			}
     		} catch (Exception e) {
     			System.out.println(e.getMessage());
     			e.printStackTrace();
     		}
-    		i = i + 1;
+    		i++;
     	}
     	if (minimumWaitUntilParse > 0) {
     		this.pauseParsingOfFeeds(minimumWaitUntilParse);
@@ -109,7 +107,7 @@ public class RssImporter
     	RssParser rss           = new RssParser();
         RssFeed feed            = rss.load(feedProperties.getFeedUrl());
         List<RssItemBean> items = feed.getItems();
-        Integer itemCount       = items.size();
+        int itemCount       = items.size();
         for (int i=0; i<itemCount; i++) {
              RssItemBean item = items.get(i); 
              if (true == this.storage.filterItem(this.generateItemIdentifier(item), feedProperties)) {

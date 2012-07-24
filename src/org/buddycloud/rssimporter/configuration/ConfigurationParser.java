@@ -3,14 +3,16 @@ package org.buddycloud.rssimporter.configuration;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class ConfigurationParser
 {
-    private String configurationFile             = "configuration.properties";
     private static final String DEFAULT_INTERVAL = "3600";
-    private Integer minimumFeedPollTime;
+    
+    private String configurationFile               = "configuration.properties";
     private ArrayList<FeedProperty> feedCollection = new ArrayList<FeedProperty>();
+    private int minimumFeedPollTime;
     private Properties configuration;
 
     public void setConfigurationFile(String configurationFile)
@@ -18,7 +20,7 @@ public class ConfigurationParser
     	this.configurationFile = configurationFile;
     }
 
-    public ArrayList<FeedProperty> parse() throws IOException
+    public List<FeedProperty> parse() throws IOException
     {
         Properties conf = new Properties();
         conf.load(new FileInputStream(configurationFile));
@@ -71,7 +73,7 @@ public class ConfigurationParser
         return feedCollection;
     }
     
-    public ArrayList<FeedProperty> getFeeds()
+    public List<FeedProperty> getFeeds()
     {
     	return this.feedCollection;
     }

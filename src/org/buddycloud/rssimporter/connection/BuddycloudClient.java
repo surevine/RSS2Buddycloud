@@ -1,5 +1,6 @@
 package org.buddycloud.rssimporter.connection;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -11,6 +12,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 public class BuddycloudClient
 {
@@ -30,7 +32,7 @@ public class BuddycloudClient
         );
     }
 
-    public String createPost(String channel, String node, String content) throws Exception
+    public String createPost(String channel, String node, String content) throws IOException
     {
     	StringEntity post = new StringEntity(
     	    "<entry xmlns=\"http://www.w3.org/2005/Atom\"><content>" 
@@ -38,14 +40,14 @@ public class BuddycloudClient
         );
     	HttpPost httpPost = new HttpPost(host + "/channels/" + channel + "/" + node);
     	httpPost.setEntity(post);
-    	HttpResponse response = execute(httpPost);
+    	HttpResponse response = this.execute(httpPost);
     	if (response == null) {
     		return null;
     	}
     	return "postid";
     }
 
-    private HttpResponse execute(HttpRequestBase request) throws Exception
+    private HttpResponse execute(HttpRequestBase request) throws IOException
     {
     	if (session != null) {
     		request.addHeader(SESSION_HEADER, session);
@@ -54,7 +56,7 @@ public class BuddycloudClient
     	if (true == response.containsHeader(SESSION_HEADER)) {
     		this.session = response.getFirstHeader(SESSION_HEADER).getValue();
     	}
-        response.getEntity().consumeContent();
+    	EntityUtils.consume(response.getEntity());
     	return response;
     }
 }
