@@ -73,9 +73,10 @@ Building
 The project is configured using _maven_.
 
 ```bash
-mvn assembly:single
 mvn package
 ```
+
+**Note:** Building jar **with dependencies** is bound to _package_.
 
 Running
 -------
