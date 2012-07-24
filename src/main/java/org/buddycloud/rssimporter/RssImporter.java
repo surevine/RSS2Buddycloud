@@ -18,11 +18,24 @@ import org.horrabin.horrorss.RssParser;
 
 public class RssImporter
 {
-    private List<FeedProperty> feedCollection = new ArrayList<FeedProperty>();
+    private List<FeedProperty> feedCollection  = new ArrayList<FeedProperty>();
     private List<BuddycloudClient> connections = new ArrayList<BuddycloudClient>();
     private StorageInterface storage;
     private ConfigurationParser configurationParser;
     private MessageDigest hasher;
+
+    public static void main(String[] args)
+    {
+    	RssImporter importer = new RssImporter();
+    	try {
+    	    importer.run();
+    	} catch (Exception e) {
+    		System.out.println(e.getMessage());
+    		e.printStackTrace();
+    		System.exit(1);
+    	}
+    	System.exit(0);
+    }
 
     public void setConfigurationParser(ConfigurationParser configurationParser)
     {

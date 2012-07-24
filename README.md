@@ -70,13 +70,12 @@ The minimum configuration required is _feedUrl_ provided that all of the _buddyc
 Building
 --------
 
-To build simply use _ant_ as follows:
+The project is configured using _maven_.
 
 ```bash
-ant -f ./build/build.xml 
+mvn assembly:single
+mvn package
 ```
-
-This will place the built _rss2buddycloud.jar_ file in _target/lib_ directory.
 
 Running
 -------
@@ -84,7 +83,7 @@ Running
 After building, or if you have an already built jar file then from the working directory that contains your _configuration.properties_ file simply run:
 
 ```bash
-java -jar /path/to/your/rss2buddycloud.jar
+java -jar target/rssimporter-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 The code will run until the process is killed.
