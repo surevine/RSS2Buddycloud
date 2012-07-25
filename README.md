@@ -99,3 +99,4 @@ Notes
 * What to do with HTML in RSS posts?
 * Redo scheduling of runs using http://quartz-scheduler.org/
 * Add a logger (e.g. log4j) rather than writing to console
+* Character set encoding issues/fixes
