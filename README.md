@@ -1,10 +1,10 @@
-# RSS2Buddycloud
+# RSS2buddycloud
 
-This tool was created as a proof of concept by [Surevine](http://www.surevine.com) in order to get more useful information into [Buddycloud](https://buddycloud.org) (allowing us to discuss it, etc) increasing its worth to the company.
+This tool was created as a proof of concept by [Surevine](http://www.surevine.com) in order to get more useful information into [buddycloud](https://buddycloud.org) (allowing us to discuss it, etc) increasing its worth to the company.
 
 The system monitors one or more RSS feeds for new posts at a set interval and posts these to a channel of choice. Posts can be made to a topic or personal channel provided the account has permission to write there.
 
-The code makes use of the [buddycloud API](https://buddycloud.org/wiki/Buddycloud_HTTP_API) in order to make posts into buddycloud channels.
+The code makes use of the [buddycloud API](https://buddycloud.org/wiki/buddycloud_HTTP_API) in order to make posts into buddycloud channels.
 
 The application will identify RSS items by hashing a combination of their description, title, author, and publish date. This is because the [HORRORss](http://code.google.com/p/horrorss/) library doesn't currently provide GUID properties. The current hashing mechanism is also not perfect as, for exmaple, the BBC republish the same post with an updated publication date causing multiple posts.
 
@@ -90,7 +90,7 @@ The code will run until the process is killed.
 * This is a very basic but functional piece of code. Please feel free to fork, use, and make pull requests for new features and/or bug fixes.
 * I'd later like to add the ability to supply templates via configuration using any of the properties from the RSS feed so you can build custom posts per incoming feed.
 * HORRORss really needs an update to include additional item properties, if we could include GUID then I could remove the awful hashing code that is used.
-* Authenticated (Basic, Digest) need to be supported (see http://www.java-forums.org/java-net/7242-reading-urls-protected-http-authentication.html) - seems easy enough but will require modifying HORRORss and RSS2Buddycloud
+* Authenticated (Basic, Digest) need to be supported (see http://www.java-forums.org/java-net/7242-reading-urls-protected-http-authentication.html) - seems easy enough but will require modifying HORRORss and RSS2buddycloud
 * What to do with HTML in RSS posts?
 * Redo scheduling of runs using http://quartz-scheduler.org/
 * Add a logger (e.g. log4j) rather than writing to console
