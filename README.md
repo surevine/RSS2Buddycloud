@@ -1,5 +1,4 @@
-RSS2Buddycloud
-===============
+# RSS2Buddycloud
 
 This tool was created as a proof of concept by [Surevine](http://www.surevine.com) in order to get more useful information into [Buddycloud](https://buddycloud.org) (allowing us to discuss it, etc) increasing its worth to the company.
 
@@ -19,10 +18,9 @@ There are several dependencies which are included in the _build/lib_ directory a
 * [Sparta-XML](http://sparta-xml.sourceforge.net/) (required by HORRORss)
 * [SQLite JDBC](http://www.zentus.com/sqlitejdbc/)
 
-Configuration
--------------
+## Configuration
 
-Configuration of the application is stored in the file _configuration.properties_
+Configuration of the application is stored in the file _configuration.properties_.
 
     storage.type=sqlite
     storage.sqlite.file=data.sqlite
@@ -48,12 +46,12 @@ The first part of configuration is related to the storage mechanism the code wil
 
 Next we define some default parameters. These are used if the individual feeds do not provide a value themselves (e.g. if you wanted to use a single user account to do all your RSS posting).
 
-* **interval**: Minimum amount of time between RSS feed checks in seconds (also defaulted in code to 1 hour)
-* **buddycloud.username**: The username with which to authenticate with buddycloud (well the XMPP server)
-* **buddycloud.password**: Password (as above)
-* **buddycloud.channel**: The channel to post to
-* **buddycloud.node**: The node to post to 
-* **buddycloud.host**: The domain+path to your API install, e.g. https://api.example.com, _no ending slash_
+* __interval__: Minimum amount of time between RSS feed checks in seconds (also defaulted in code to 1 hour)
+* __buddycloud.username__: The username with which to authenticate with buddycloud (well the XMPP server)
+* __buddycloud.password__: Password (as above)
+* __buddycloud.channel__: The channel to post to
+* __buddycloud.node__: The node to post to 
+* __buddycloud.host__: The domain+path to your API install, e.g. https://api.example.com, _no ending slash_
 
 Next we define the feeds that we'd like to process using a space seperated list. Feeds are identified by any valid string which does not contain spaces.
 
@@ -65,10 +63,9 @@ The minimum configuration required is _feedUrl_ provided that all of the _buddyc
 
     bbcnews.buddycloud.channel=someotherchannel@topics.example.com
 
-**Configuration changes require a restart of rss2buddycloud**
+__Configuration changes require a restart of rss2buddycloud__
 
-Building
---------
+## Building
 
 The project is configured using _maven_.
 
@@ -76,10 +73,9 @@ The project is configured using _maven_.
 mvn package
 ```
 
-**Note:** Building jar **with dependencies** is bound to _package_.
+__Note:__ Building jar __with dependencies__ is bound to _package_.
 
-Running
--------
+## Running
 
 After building, or if you have an already built jar file then from the working directory that contains your _configuration.properties_ file simply run:
 
@@ -89,8 +85,7 @@ java -jar target/rssimporter-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 The code will run until the process is killed.
 
-Notes
------
+## Notes
 
 * This is a very basic but functional piece of code. Please feel free to fork, use, and make pull requests for new features and/or bug fixes.
 * I'd later like to add the ability to supply templates via configuration using any of the properties from the RSS feed so you can build custom posts per incoming feed.
@@ -100,3 +95,18 @@ Notes
 * Redo scheduling of runs using http://quartz-scheduler.org/
 * Add a logger (e.g. log4j) rather than writing to console
 * Character set encoding issues/fixes
+
+## Licence
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

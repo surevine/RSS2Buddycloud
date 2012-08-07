@@ -6,7 +6,16 @@
     <name>Buddycloud RSS importer</name>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
- 
+    <licenses>
+        <license>
+            <name>The GPL Version 3.0</name>
+            <url>http://www.gnu.org/licenses/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>http://github.com/surevine/rss2buddycloud</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -75,7 +84,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.buddycloud.rssimporter.RssImporter</mainClass>
+                            <mainClass>com.surevine.rssimporter.RssImporter</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
