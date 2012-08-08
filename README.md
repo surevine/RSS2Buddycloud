@@ -10,7 +10,7 @@ The application will identify RSS items by hashing a combination of their descri
 
 At present only SQLite (and 'no storage') are supported as storage mechanisms. If required new systems can easily be added by implementing _StorageInterface_ and updating the _StorageFactory_.
 
-There are several dependencies which are included in the _build/lib_ directory and are as follows:
+There are several dependencies which are pulled in using maven, except HORRORss and Sparta which are included as local repositiories in the __repo__ directory.
 
 * [Apache commons](http://commons.apache.org/) (code, lang, logging)
 * [Apache HTTP Components](http://hc.apache.org/) (HttpClient, core, httpmime)
